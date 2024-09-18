@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="card-container">
+        {% for student in students %}
+            <div class="card">
+                <div class="card-header">
+                    <h2>Student Information</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Ismi:</strong> {{ student.first_name }}</p>
+                    <p><strong>Familiyasi:</strong> {{ student.last_name }}</p>
+                    <p><strong>Otasining ismi:</strong> {{ student.father_name }}</p>
+                    <p><strong>Ozining nomeri:</strong> {{ student.phone_number }}</p>
+                    <p><strong>Otasining nomeri:</strong> {{ student.father_phone_number }}</p>
+                    <p><strong>Registratsiya qilingan sana:</strong> {{ student.registration_date }}</p>
+                    <p><strong>Kurs turi:</strong> {{ student.course_type }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No students found.</p> 
+        {% endfor %}    
+    </div> <!-- Ushbu qatorni tekshirib chiqing -->
+</body>
+</html>
