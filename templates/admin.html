@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studentlar Ro'yxati</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center; /* Vertikal joylashuv */
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            padding-top: 100px; /* Yuqoridan 100px bo'sh joy */
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90vw; /* Kengligi 90vw */
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 90vw; /* Jadval kengligi 90vw */
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        /* Birinchi ustun uchun radius */
+        th:first-child {
+            border-top-left-radius: 10px; 
+            border-bottom-left-radius: 10px; /* Pastki burchak uchun radius */
+        }
+        /* Oxirgi ustun uchun radius */
+        th:last-child {
+            border-top-right-radius: 10px; 
+            border-bottom-right-radius: 10px; /* Pastki burchak uchun radius */
+        }
+        /* Chiziqlarni olib tashlash */
+        tr {
+            border-bottom: none; /* Chiziqlarni olib tashlash */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Studentlar Ro'yxati</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ismi</th>
+                    <th>Familiyasi</th>
+                    <th>Otasining ismi</th>
+                    <th>O'zining nomeri</th>
+                    <th>Kurs turi</th>
+                    <th>To'lov summasi (so'm)</th>
+                    <th>Chegirma foizi (%)</th>
+                    <th>Yakuniy to'lov (so'm)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ student.first_name }}</td>
+                    <td>{{ student.last_name }}</td>
+                    <td>{{ student.father_name }}</td>
+                    <td>{{ student.phone_number }}</td>
+                    <td>{{ student.course_type }}</td>
+                    <td>{{ student.payment_amount }}</td>
+                    <td>{{ student.discount_percent }}</td>
+                    <td>{{ student.final_payment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

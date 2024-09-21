@@ -1,19 +1,19 @@
 import os
 from pathlib import Path
 
-# Loyihaning bazaviy katalogi
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Django maxfiy kaliti
-SECRET_KEY = 'your-secret-key'
+# Secret Key
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key')
 
-# Django ishlash rejimi
-DEBUG = True
+# Debug Mode
+DEBUG = True  # Change to False in production
 
-# Yashirilgan foydalanuvchilar ro'yxati
+# Allowed Hosts
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-# Django ilovalari
+# Installed Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -21,10 +21,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',  # Sizning dastur (app) nomingiz
+    'main',  # Your app
 ]
 
-# Middleware sozlamalari
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -35,14 +35,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URL konfiguratsiyalari
+# URL Configuration
 ROOT_URLCONF = 'admin.urls'
 
-# Shablonlar sozlamalari
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Agar umumiy shablonlar papkasi bo'lsa
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -55,10 +55,10 @@ TEMPLATES = [
     },
 ]
 
-# WSGI ilova
+# WSGI
 WSGI_APPLICATION = 'admin.wsgi.application'
 
-# Ma'lumotlar bazasi sozlamalari
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -66,7 +66,7 @@ DATABASES = {
     }
 }
 
-# Parol sozlamalari
+# Authentication
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -82,27 +82,25 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Xalqaro sozlamalar
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+# Internationalization
+LANGUAGE_CODE = 'uz-uz'
+TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Statik fayllar sozlamalari
+# Static and Media files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Agar umumiy statik fayllar papkasi bo'lsa
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# settings.py
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Bu yerda to'g'ri papka yo'lini ko'rsating
-
-
-# Media fayllar sozlamalari
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Foydalanuvchi sozlamalari
+# Login/Logout redirects
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Security and production settings
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    CSRF_TRUSTED_ORIGINS = ['https://your-production-domain.com']
