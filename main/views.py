@@ -25,7 +25,9 @@ def addstudent(request):
         registration_date = request.POST.get('registration_date')
         course_type = request.POST.get('course_type')
         payment_amount = request.POST.get('payment_amount')
-        discount_percent = request.POST.get('discount_percent')
+        
+        # Discount qiymatini olish va agar bo'sh bo'lsa 0 qilib belgilash
+        discount_amount = request.POST.get('discount_amount', 0)  # Agar kiritilmasa, 0 qilib olamiz
 
         # Yangi talaba obyektini yaratish
         student = Student(
@@ -37,13 +39,13 @@ def addstudent(request):
             registration_date=registration_date,
             course_type=course_type,
             payment_amount=payment_amount,
-            discount_percent=discount_percent
+            discount_amount=discount_amount  # Chegirma miqdorini kiritish
         )
         
         # Yakuniy to'lovni hisoblash
         student.calculate_final_payment()
         
-        # Ma'lumotlarni bazaga saqlash
+        # Ma'lumotlarni bazaga saqlash  
         student.save()
 
         # Saqlangandan keyin 'home' sahifasiga qaytish
@@ -52,9 +54,7 @@ def addstudent(request):
     # GET so'rovida formani render qilish
     return render(request, 'add_student.html')
 
+
 def student_list(request):
     # Barcha talabalarni olish va shablon bilan render qilish
     students = Student.objects.all()  # Immutability printsipiga ko'ra, bu ob'ekt o'zgarmaydi.
-    
-    # Barcha ma'lumotlar shablon orqali yuboriladi
-    return render(request, 'admin.html', {'students': students})

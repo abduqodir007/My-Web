@@ -1,4 +1,6 @@
+
 from django.db import models
+from decimal import Decimal  # Decimal ishlatish tavsiya qilinadi
 
 class Student(models.Model):
     first_name = models.CharField(max_length=100)  # Ismi
@@ -9,21 +11,12 @@ class Student(models.Model):
     registration_date = models.DateField()  # Ro'yxatdan o'tgan sana
     course_type = models.CharField(max_length=100)  # Kurs turi
     payment_amount = models.DecimalField(max_digits=10, decimal_places=2)  # To'lanadigan summa
-    discount_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)  # Chegirma foizi
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)  # Chegirma summasi
     final_payment = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Yakuniy to'lov
 
     def calculate_final_payment(self):
         # Chegirma asosida yakuniy to'lovni hisoblash
-        if self.discount_percent > 0:
-            discount_amount = (self.payment_amount * self.discount_percent) / 100
-            self.final_payment = self.payment_amount - discount_amount
-        else:
-            self.final_payment = self.payment_amount
+        payment_amount = Decimal(self.payment_amount)  # Stringdan Decimal ga aylantirish
+        discount = Decimal(self.discount_amount) if self.discount_amount else Decimal(0)  # Stringdan Decimal ga aylantirish
 
-    def save(self, *args, **kwargs):
-        # Yakuniy to'lovni avtomatik hisoblash
-        self.calculate_final_payment()
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        self.final_payment = payment_amount - discount  # Yakuniy to'lovni hisoblash
